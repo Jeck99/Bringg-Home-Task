@@ -1,0 +1,61 @@
+<h1>Bringg Map App Project</h1>
+<div id="btnGroup">
+  <button (click)="addForm()">{{addBtn}}</button>
+  <button *ngIf="!addFormS" (click)="sortByAge()">Sort by Age</button>
+  <button *ngIf="!addFormS" (click)="sortByName()">Sort by Name</button>
+</div>
+<main>
+  <div *ngIf="!addFormS">
+    <h1>List Of Users</h1>
+    <ul *ngFor="let user of arUsers ;let i =index ">
+      <li>
+        <div id="userDiv" class="userDiv">
+          <img src={{user.picture}}>
+          <h1 id="name" (click)="showLoc(i)" title="click to see location"> {{user.name}}</h1>
+          <h4>Age : {{user.age}} </h4>
+          <h4>Email : {{user.email}}</h4>
+          <h4>Is Active : {{user.isActive}}</h4>
+          <button (click)="deleteUser(i)">Remove</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="addFormS">
+    <h1>Add New User</h1>
+    <form #trvForm="ngForm" >
+      <div>
+        <label for="idName" >Full Name
+          <span *ngIf="trvName.errors && (trvName.dirty || trvName.touched)" [style.color]='red'>* name is required</span>
+        </label>
+        <input id="idName" name="name" type="text" required [(ngModel)]="name" #trvName="ngModel">
+      </div>
+      <div>
+        <label for="idEmail">Email
+          <span *ngIf="trvEmail.errors && (trvEmail.dirty || trvEmail.touched)" [style.color]='red'>* email is required</span>
+        </label>
+        <input id="idEmail" name="email" type="email" required [(ngModel)]="email" #trvEmail="ngModel">
+      </div>
+      <div>
+        <label for="idAge">Age
+          <span *ngIf="trvAge.errors && (trvAge.dirty || trvAge.touched)" [style.color]='red'>* age is required</span>
+        </label>
+        <input id="idAge" name="age" type="number" required [(ngModel)]="age" #trvAge="ngModel">
+      </div>
+      <div>
+        <label for="idPic">Picture</label>
+        <input id="idPic" name="picture" type="url" [(ngModel)]="picture" #trvPic="ngModel">
+      </div>
+      <div>
+          <label for="idisActive">Are You Active ?</label>
+          <input id="idisActive" name="isActive" type="radio" [(ngModel)]="isActive" #trvisActive="ngModel" value="true">Yes
+          <input id="idisActive" name="isActive" type="radio" [(ngModel)]="isActive" #trvisActive="ngModel" value="false">Not  
+        </div>
+      <input type="reset">
+      <br/>
+      <br/>
+      <input [disabled]="!trvForm.valid"   type="submit" (click)="addUser(trvForm)">
+
+    </form>
+  </div>
+</main>
+<app-map [arUsers]="arUsers" [userLong]="UserLong" [userLat]="UserLat" [zoom]="zoom"></app-map>

@@ -1,0 +1,11 @@
+
+<div>
+    <h1> Google Maps </h1>
+    <agm-map [latitude]="userLat"  [longitude]="userLong" [scrollwheel]="true" [zoom]="zoom" >
+      <agm-marker *ngFor="let user of arUsers" [latitude]="user.latitude" [longitude]="user.longitude" >
+              <agm-info-window [disableAutoPan]="true">
+                <strong>{{user.name}}</strong><br/>{{user.age}}
+                </agm-info-window>
+      </agm-marker>
+    </agm-map>
+  </div>
